@@ -223,7 +223,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $success = $stmt->execute([
         ':nama_lengkap'     => $nama_lengkap,
         ':nisn'             => $nisn,
-        ':kelas'             => $kelas,
+        ':kelas'            => $kelas,
         ':tempat_lahir'     => $tempat_lahir,
         ':tanggal_lahir'    => $tanggal_lahir,
         ':jenis_kelamin'    => $jenis_kelamin,
@@ -248,7 +248,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ':foto'             => $foto
     ]);
 
-    if ($success) {
+    $sql_user = "INSERT INTO users (username, password, role_id) VALUES (:username, :password, :role_id)";
+    $stmt2 = $pdo->prepare($sql_user);
+    
+    $success_siswa = $stmt2->execute([
+        ':username' => $nisn,
+        ':password' => $nisn,
+        ':role_id' => 4,
+    ]);
+
+    if ($success && $success_siswa) {
         echo "
         <script>
         alert('Data berhasil disimpan!');

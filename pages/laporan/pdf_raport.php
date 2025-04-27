@@ -7,7 +7,10 @@ use Dompdf\Options;
 use Dompdf\Dompdf;
 
 
-$id_siswa = $_POST['siswa'] ?? null;
+// $id_siswa = $_POST['siswa'] ?? null;
+
+$id_siswa = $_GET['id_siswa'] ?? null;
+$kelas = $_GET['kelas'] ?? null;
 
 // Ambil data siswa
 $query_siswa = "SELECT * FROM tb_siswa WHERE id = :id_siswa";
@@ -17,10 +20,11 @@ $stmt->execute([
 ]);
 $siswa = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$query_ket_siswa = "SELECT * FROM tb_keterangan_siswa WHERE id_siswa = :id_siswa";
+$query_ket_siswa = "SELECT * FROM tb_keterangan_siswa WHERE id_siswa = :id_siswa AND kelas = :kelas";
 $stmt2 = $pdo->prepare($query_ket_siswa);
 $stmt2->execute([
-    'id_siswa' => $id_siswa
+    'id_siswa' => $id_siswa,
+    'kelas' => $kelas
 ]);
 $ket_siswa = $stmt2->fetch(PDO::FETCH_ASSOC);
 
@@ -39,7 +43,8 @@ $query_nilai = "SELECT a.kelas, a.nilai_akhir, c.nama as nama_mapel, a.capaian
 $stmt2 = $pdo->prepare($query_nilai);
 $stmt2->execute([
     'id_siswa' => $id_siswa,
-    'kelas' => $siswa['kelas']
+    // 'kelas' => $siswa['kelas']
+    'kelas' => $kelas
 ]);
 $data_nilai = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
@@ -183,7 +188,7 @@ ob_start();
                 <td style="border: none; text-align: left;">Nama</td>
                 <td style="border: none; text-align: left;">: <?= $siswa['nama_lengkap'] ?></td>
                 <td style="border: none; text-align: left;">Kelas</td>
-                <td style="border: none; text-align: left;">: <?= $siswa['kelas'] ?></td>
+                <td style="border: none; text-align: left;">: <?= $kelas ?></td>
             </tr>
             <tr>
                 <td style="border: none; text-align: left;">NIS/NISN</td>
@@ -218,6 +223,7 @@ ob_start();
             </tr>
         </thead>
         <tbody>
+        
             <?php $no = 1; foreach($data_nilai as $n): ?>
             <tr style="text-align:center;">
                 <td><?= $no++ ?></td>
@@ -291,5 +297,5 @@ $dompdf = new Dompdf($options);
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
-$dompdf->stream("raport-empat-halaman.pdf", ["Attachment" => false]);
+$dompdf->stream("RAPORT.pdf", ["Attachment" => false]);
 ?>

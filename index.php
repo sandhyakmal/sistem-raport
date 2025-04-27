@@ -62,7 +62,7 @@ require 'helper.php';
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
             <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Hi, <?php echo $_SESSION['username']; ?> </div></a>
+            <div class="d-sm-none d-lg-inline-block">Hi, <?php echo $_SESSION['nama']; ?> </div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <a href="logout.php" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -110,13 +110,13 @@ require 'helper.php';
               echo " <li><a class='nav-link' href='?page=laporan'><i class='fa fa-book'></i> <span>Laporan Nilai Siswa</span></a></li>";
             }
 
-            if(isset($allowed['cetak_raport']['view']) && $allowed['laporan']['view']) {
+            if(isset($allowed['cetak_raport']['view']) && $allowed['cetak_raport']['view']) {
               echo " <li><a class='nav-link' href='?page=raport'><i class='fa fa-book'></i> <span>Cetak Raport</span></a></li>";
             }
 
-            // if($_SESSION['role_id'] == '3') {
-            //   echo "<li><a class='nav-link' href='?page=menu_permission'><i class='fa fa-unlock'></i> <span>Menu Permission</span></a></li>";
-            // }
+            if($_SESSION['role_id'] == '3') {
+              echo "<li><a class='nav-link' href='?page=menu_permission'><i class='fa fa-unlock'></i> <span>Menu Permission</span></a></li>";
+            }
 
             ?>  
         
@@ -213,7 +213,9 @@ require 'helper.php';
             include "pages/nilai/edit_nilai.php";
           } elseif ($page == 'input_keterangan')  {
             include "pages/nilai/input_keterangan.php";
-          } 
+          } elseif ($page == 'hapus_keterangan')  {
+            include "pages/nilai/hapus_keterangan.php"; 
+          }
           
           // LAPORAN
           elseif ($page == 'laporan') {

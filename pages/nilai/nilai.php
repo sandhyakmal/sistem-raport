@@ -110,7 +110,7 @@
               <tbody>
               <?php
                 $no = 1;
-                $query = "SELECT tks.id, ts.nama_lengkap, ts.kelas, tks.kegiatan, tks.predikat, tks.keterangan, tks.sakit, tks.izin, tks.alpa, tks.semester, tks.fase, tks.tahun_ajaran, tks.catatan FROM tb_keterangan_siswa tks
+                $query = "SELECT tks.id, ts.nama_lengkap, tks.kelas, tks.kegiatan, tks.predikat, tks.keterangan, tks.sakit, tks.izin, tks.alpa, tks.semester, tks.fase, tks.tahun_ajaran, tks.catatan FROM tb_keterangan_siswa tks
                           JOIN tb_siswa ts ON tks.id_siswa = ts.id ";
                 $stmt = $pdo->prepare($query);
                 $stmt->execute();
@@ -135,7 +135,7 @@
                     <td>
                       <?php
                         if ($allowed['input_nilai']['delete'] && $_SESSION['role_id'] == 6) { 
-                          echo '<a href="?page=hapus_nilai&id=' . $data['id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin ingin menghapus data ini?\');">Hapus</a>';
+                          echo '<a href="?page=hapus_keterangan&id=' . $data['id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin ingin menghapus data ini?\');">Hapus</a>';
                         } 
                       ?>
                     </td>

@@ -146,7 +146,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ':email'            => $email
     ]);
 
-    if ($success) {
+    $sql_guru = "INSERT INTO users ( username, password, role_id ) VALUES ( :username, :password, :role_id )";
+
+    $stmt2 = $pdo->prepare($sql_guru);
+
+    // Eksekusi perintah SQL dengan data yang di-bind
+    $success_guru = $stmt2->execute([
+        ':username'    => $nip,
+        ':password'    => $nip,
+        ':role_id'     => 5
+    ]);
+
+    if ($success && $success_guru) {
         echo "
         <script>
         alert('Data berhasil disimpan!');

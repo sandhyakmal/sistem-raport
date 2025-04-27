@@ -1,3 +1,3 @@
 <div class="section-header">
-    <h1>Welcome <?php echo $_SESSION['username']; ?> ! </h1> 
+    <h1>Welcome <?php echo $_SESSION['nama']; ?> ! </h1> 
 </div>
